@@ -1,0 +1,26 @@
+= Documentation of the confluence-publisher-plugin project
+:doctype: book
+:page-layout!:
+:toc: left
+:toclevels: 2
+:sectanchors:
+:sectlinks:
+:sectnums:
+//:imagesdir: ../images
+//:includedir: _includes
+
+[#user-toc]
+== About the Confluence publisher plugin
+The Confluence publisher Gradle plugin is a plugin to convert asciidoc generated HTML to Confluence compatible XHTML
+and publishes the documentation to Confluence.
+For further information about how to use the plugins, read the User guide.
+If you're a developer, check out the developer documentation on how to setup and build the project.
+
+== User guide
+Learn how to use the Confluence publisher Gradle plugin in the <<pages/user-guide.adoc#, User guide>>.
+
+== Release notes
+Check out the <<pages/release-notes.adoc#, release notes>> to see the changes.
+
+== Developer documentation
+Find out how to setup and build the project in the <<pages/developer-doc.adoc#, Developer documentation>>.

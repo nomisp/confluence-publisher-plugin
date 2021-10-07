@@ -1,0 +1,42 @@
+= Confluence publisher Gradle plugin Developer documentation
+:doctype: book
+:page-layout!:
+:toc: left
+:toclevels: 2
+:sectanchors:
+:sectlinks:
+:sectnums:
+
+== Setup the development environment
+=== Clone the repository
+First of all clone the Git repository to a local directory.
+[source, bash]
+----
+git clone https://github.com/nomisp/confluence-publisher-plugin.git
+----
+
+=== Import into IntelliJ
+To import the project into IntelliJ, just go to: File > New... > Project from Existing Sources...
+
+Choose the location of the local directory and continue importing from the Gradle model.
+
+=== Local build
+The project makes use of a Gradle wrapper. To build the project just make use of the standard tasks. e.g.
+[source, bash]
+----
+gradlew clean build
+----
+
+To run the tests (unit and functional tests) execute:
+[source, bash]
+----
+gradlew check
+----
+
+== Locally try out the plugins
+To try out the plugin in another project, the plugin can be published to the local maven repository.
+[source, bash]
+----
+gradlew publishToMavenLocal
+----
+In the console output the version will be printed out and can be used in the projects where they should be tried out.

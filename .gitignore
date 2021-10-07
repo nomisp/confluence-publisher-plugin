@@ -1,5 +1,16 @@
+# Eclipse
+.classpath
+.project
+.settings/
+
+# IntelliJ
+.idea/
+*.iml
+*.iws
+
 .gradle
 /build/
+/plugin/build/
 
 # Ignore Gradle GUI config
 gradle-app.setting
