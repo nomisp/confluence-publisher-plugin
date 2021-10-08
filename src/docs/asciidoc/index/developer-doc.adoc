@@ -33,6 +33,9 @@ To run the tests (unit and functional tests) execute:
 gradlew check
 ----
 
+[NOTE]
+In order to test the plugin an official Docker container provided by Atlassian can be used (see https://hub.docker.com/r/atlassian/confluence-server/tags/[atlassian/confluence-server])
+
 == Locally try out the plugins
 To try out the plugin in another project, the plugin can be published to the local maven repository.
 [source, bash]

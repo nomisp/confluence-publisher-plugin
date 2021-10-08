@@ -17,10 +17,10 @@ For further information about how to use the plugins, read the User guide.
 If you're a developer, check out the developer documentation on how to setup and build the project.
 
 == User guide
-Learn how to use the Confluence publisher Gradle plugin in the <<pages/user-guide.adoc#, User guide>>.
+Learn how to use the Confluence publisher Gradle plugin in the <<index/user-guide.adoc#, User guide>>.
 
 == Release notes
-Check out the <<pages/release-notes.adoc#, release notes>> to see the changes.
+Check out the <<index/release-notes.adoc#, release notes>> to see the changes.
 
 == Developer documentation
-Find out how to setup and build the project in the <<pages/developer-doc.adoc#, Developer documentation>>.
+Find out how to setup and build the project in the <<index/developer-doc.adoc#, Developer documentation>>.
