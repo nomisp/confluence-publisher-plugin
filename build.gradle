@@ -21,14 +21,7 @@ plugins {
 repositories {
     // Use Maven Central for resolving dependencies.
     mavenCentral()
-    maven {
-        allowInsecureProtocol=true
-        url = "${artifactoryRepository}"
-        credentials {
-            username = "$artifactrepoUsername"
-            password = "$artifactrepoPassword"
-        }
-    }
+
 }
 
 dependencies {
