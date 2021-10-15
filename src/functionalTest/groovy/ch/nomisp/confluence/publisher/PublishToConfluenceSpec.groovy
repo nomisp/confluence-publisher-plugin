@@ -16,7 +16,9 @@ import java.util.stream.IntStream
 
 class PublishToConfluenceSpec extends Specification{
 
-    private static final String CONFLUENCE_ROOT_URL = "http://localhost:8090"
+//    private static final String CONFLUENCE_ROOT_URL = "http://localhost:8090"
+    private static final String CONFLUENCE_ROOT_URL = "https://nomisp.atlassian.net/wiki"
+    private static final String CONFLUENCE_API_TOKEN = '1aDZta0j2e3JFmwyzLsS6D6E'
 
     @Rule
     public TemporaryFolder testProjectDir = new TemporaryFolder()
@@ -46,15 +48,16 @@ confluencePublisher {
     asciiDocRootFolder = file("\${projectDir}/docs/asciidoc")
     confluencePublisherBuildFolder = file("\${buildDir}/docs/confluence")
     rootConfluenceUrl = '$CONFLUENCE_ROOT_URL'
-    spaceKey = 'MNET'
-    ancestorId = 123
-    username = 'rest.swrd@techuser.com'
-    password = 'jf47AjxRJrYzzW9'
+    spaceKey = 'GRADLE'
+    ancestorId = 2555905
+    username = 'nomisp@gmail.com'
+    password = '$CONFLUENCE_API_TOKEN'
     pageTitlePrefix = 'Generated-Test -- '
     notifyWatchers = false
 }
 
 """
+        createIndexAdoc()
     }
 
     GradleRunner createGradleRunner() {
@@ -64,7 +67,24 @@ confluencePublisher {
 //                .withDebug(true)
     }
 
+    private void createIndexAdoc() {
+        File indexAdoc = testProjectDir.newFile('docs/asciidoc/index.adoc')
+        indexAdoc << """
+= Test-Documentation of the confluence-publisher-plugin
+:doctype: book
+:page-layout!:
+:toc: left
+:toclevels: 2
+:sectanchors:
+:sectlinks:
+:sectnums:
 
+[#user-toc]
+
+== Content
+This is the content of index.adoc
+"""
+    }
 
     private CloseableHttpClient recordHttpClientForRequestException(IOException exception) throws IOException {
         CloseableHttpClient httpClientMock = Mock(CloseableHttpClient)

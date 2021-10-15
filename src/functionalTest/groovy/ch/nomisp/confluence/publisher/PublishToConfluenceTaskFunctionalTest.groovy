@@ -22,14 +22,25 @@ class PublishToConfluenceTaskFunctionalTest extends PublishToConfluenceSpec {
 
         when:
         def result = createGradleRunner()
-                .withArguments('publishToConfluence')
-                .withArguments('-PconvertOnly=true')
-                .withArguments('--stacktrace')
-//                .withArguments('--debug')
+                .withArguments(['publishToConfluence', '--convertOnly', '--info'])
                 .withProjectDir(testProjectDir.root)
                 .build()
 
         then:
         result.output.contains("Publishing to Confluence skipped ('convert only' is enabled)")
+    }
+
+    def "Task must publish to confluence"() {
+        given:
+        createProject()
+
+        when:
+        def result = createGradleRunner()
+                .withArguments(['publishToConfluence', '--skipSslVerification', '--info'])
+                .withProjectDir(testProjectDir.root)
+                .build()
+
+        then:
+        result.output.contains("Publishing page")
     }
 }

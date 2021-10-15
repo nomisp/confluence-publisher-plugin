@@ -14,8 +14,7 @@ The converted documentation can be directly published to Confluence.
 This plugin makes use of the https://github.com/confluence-publisher/confluence-publisher[confluence-publisher] project
 and is a conversion of that Maven plugin to Gradle.
 
-[source, groovy]
-To the plugin make use of the Gradle plugin DSL.
+To use the plugin make use of the Gradle plugin DSL.
 [source, groovy]
 ----
 plugins {
@@ -42,24 +41,28 @@ The task can be configured with the following properties:
 |Column 2, row 2
 |Column 3, row 2
 
-|Column 1, row 3
+|rootConfluenceUrl
 |Column 2, row 3
 |Column 3, row 3
 
-|Column 1, row 4
+|spaceKey
 |Column 2, row 4
 |Column 3, row 4
 
-|Column 1, row 5
+|ancestorId
 |Column 2, row 5
 |Column 3, row 5
 
-|Column 1, row 6
+|username
 |Column 2, row 6
 |Column 3, row 6
 
-|Column 1, row 7
-|Column 2, row 7
+|password
+|The password of the user to use for publishing.
+
+Note: when publishing to Confluence Cloud, an API token generated via the corresponding Atlassian account has to be used as password.
+
+Note: when publishing to on-premise Confluence with an API token, leave the username empty ("").
 |Column 3, row 7
 
 |Column 1, row 8

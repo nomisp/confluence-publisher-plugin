@@ -6,6 +6,7 @@ import org.gradle.api.GradleException
 import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.logging.Logger
 import org.gradle.api.provider.Property
+import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.InputDirectory
 import org.gradle.api.tasks.Internal
 import org.gradle.api.tasks.OutputDirectory
@@ -23,7 +24,6 @@ import org.sahli.asciidoc.confluence.publisher.converter.*
 import java.nio.charset.Charset
 import java.nio.charset.StandardCharsets
 import java.nio.file.Path
-import java.nio.file.Paths
 
 @TypeChecked
 class PublishToConfluenceTask extends DefaultTask {
@@ -73,12 +73,12 @@ class PublishToConfluenceTask extends DefaultTask {
     @Internal
     final Property<String> proxyPassword = project.objects.property(String)
 
-    @Internal
-    boolean convertOnly = false
-    @Internal
-    boolean skipSslVerification = false
-    @Internal
-    boolean enableHttpClientSystemProperties = false
+    @Input
+    boolean convertOnly
+    @Input
+    boolean skipSslVerification
+    @Input
+    boolean enableHttpClientSystemProperties
 
     @Internal
     Map<String, Object> attributes = [:]
@@ -106,7 +106,7 @@ class PublishToConfluenceTask extends DefaultTask {
 //            }
 
             Path outDir = confluencePublisherBuildFolder.isPresent() ? confluencePublisherBuildFolder.get().asFile.toPath()
-                    : project.buildDir.toPath().resolve('asciidoc-confluence-publisher')
+                    : project.file("${project.buildDir}/docs/asciidoc-confluence-publisher").toPath()
 
             ConfluencePublisherMetadata confluencePublisherMetadata = asciidocConfluenceConverter.convert(asciidocPagesStructureProvider,
                     pageTitlePostProcessor,
@@ -192,16 +192,19 @@ class PublishToConfluenceTask extends DefaultTask {
 
     @Option(option = 'convertOnly', description = 'Defines whether to only convert AsciiDoc sources, but not publish to Confluence (for checking documentation sanity without publishing).')
     void setConvertOnly(boolean convertOnly) {
+        logger.debug("Received command line argument '--convertOnly'. Publishing will be skipped.")
         this.convertOnly = convertOnly
     }
 
     @Option(option = 'skipSslVerification', description = 'Defines whether to disable SSL certificate verification when connecting to Confluence via HTTPS while using self- signed certificates.')
     void setSkipSslVerification(boolean skipSslVerification) {
+        logger.debug("Received command line argument '--skipSslVerification'. SSL verification will be skipped.")
         this.skipSslVerification = skipSslVerification
     }
 
     @Option(option = 'enableHttpClientSystemProperties', description = 'Defines whether to enable support for configuring the underlying HTTP client using system properties.')
     void setEnableHttpClientSystemProperties(boolean enableHttpClientSystemProperties) {
+        logger.debug("Received command line argument '--enableHttpClientSystemProperties'.")
         this.enableHttpClientSystemProperties = enableHttpClientSystemProperties
     }
 
