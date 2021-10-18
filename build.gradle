@@ -13,9 +13,12 @@ plugins {
 
     // AsciiDoc plugins
     id 'org.asciidoctor.base' version "${asciiDocPluginVersion}"
-    id "org.asciidoctor.jvm.convert" version "${asciiDocPluginVersion}"
+    id 'org.asciidoctor.jvm.convert' version "${asciiDocPluginVersion}"
     id 'org.asciidoctor.jvm.gems' version "${asciiDocPluginVersion}"
     id 'org.ajoberstar.git-publish' version "${asciiDocGitPublishPluginVersion}"
+
+    // Credentials plugin to avoid passwords or tokens in plain text
+    id 'nu.studer.credentials' version "${credentialsPluginVersion}"
 }
 
 repositories {
@@ -62,6 +65,8 @@ configurations.functionalTestImplementation.extendsFrom(configurations.testImple
 tasks.register('functionalTest', Test) {
     testClassesDirs = sourceSets.functionalTest.output.classesDirs
     classpath = sourceSets.functionalTest.runtimeClasspath
+    // the confluence api token has to be added in advance using: addCredentials --key confluenceToken --value <theToken>
+    systemProperty 'confluenceToken', credentials.forKey('confluenceToken')
     useJUnitPlatform()
 }
 

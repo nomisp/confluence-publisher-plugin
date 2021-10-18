@@ -18,7 +18,7 @@ class PublishToConfluenceSpec extends Specification{
 
 //    private static final String CONFLUENCE_ROOT_URL = "http://localhost:8090"
     private static final String CONFLUENCE_ROOT_URL = "https://nomisp.atlassian.net/wiki"
-    private static final String CONFLUENCE_API_TOKEN = '1aDZta0j2e3JFmwyzLsS6D6E'
+    private static final String CONFLUENCE_API_TOKEN = System.getProperty('confluenceToken') // https://id.atlassian.com/manage-profile/security/api-tokens
 
     @Rule
     public TemporaryFolder testProjectDir = new TemporaryFolder()

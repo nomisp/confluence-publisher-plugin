@@ -34,7 +34,16 @@ gradlew check
 ----
 
 [NOTE]
-In order to test the plugin an official Docker container provided by Atlassian can be used (see https://hub.docker.com/r/atlassian/confluence-server/tags/[atlassian/confluence-server])
+In order run the functional tests, Confluence cloud can be used (see https://nomisp.atlassian.net/wiki/spaces/GRADLE/pages/2555905/Functional+Tests[Confluence-Cloud])
+
+[WARNING]
+For the functional tests don't use the Confluence-API token in plain text.
+Therefore the credentials-plugin can be used to add the token into the encrypted properties file and retrieve it afterwards from there.
+The description of the credentials plugin can be found https://github.com/etiennestuder/gradle-credentials-plugin[here].
+[source, bash]
+----
+gradlew addCredentials --key confluenceToken --value <tokenValue>
+----
 
 == Locally try out the plugins
 To try out the plugin in another project, the plugin can be published to the local maven repository.
