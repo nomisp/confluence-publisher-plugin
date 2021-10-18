@@ -11,7 +11,7 @@ import javax.inject.Inject
 class ConfluencePublisherExtension {
 
     final DirectoryProperty asciiDocRootFolder
-    final DirectoryProperty confluencePublisherBuildFolder
+    String outputDir
     final Property<String> rootConfluenceUrl
     final Property<String> spaceKey
     final Property<String> username
@@ -42,7 +42,6 @@ class ConfluencePublisherExtension {
     @Inject
     ConfluencePublisherExtension(ObjectFactory objects) {
         asciiDocRootFolder = objects.directoryProperty()
-        confluencePublisherBuildFolder = objects.directoryProperty()
         rootConfluenceUrl = objects.property(String)
         spaceKey = objects.property(String)
         username = objects.property(String)

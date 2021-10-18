@@ -9,6 +9,7 @@ import org.gradle.api.provider.Property
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.InputDirectory
 import org.gradle.api.tasks.Internal
+import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.options.Option
@@ -30,8 +31,9 @@ class PublishToConfluenceTask extends DefaultTask {
 
     @InputDirectory
     final DirectoryProperty asciiDocRootFolder = project.objects.directoryProperty()
-    @OutputDirectory
-    final DirectoryProperty confluencePublisherBuildFolder = project.objects.directoryProperty()
+    @Input
+    @Optional
+    String outputDir
     @Internal
     final Property<String> rootConfluenceUrl = project.objects.property(String)
     @Internal
@@ -97,16 +99,7 @@ class PublishToConfluenceTask extends DefaultTask {
 
             AsciidocConfluenceConverter asciidocConfluenceConverter = new AsciidocConfluenceConverter(spaceKey.get(), ancestorId.get().toString())
 
-//            def buildDir = confluencePublisherBuildFolder.getOrNull()
-//            Path outDir
-//            if (!buildDir) {
-//                outDir = project.buildDir.toPath().resolve('asciidoc-confluence-publisher')
-//            } else {
-//                outDir = buildDir.asFile.toPath()
-//            }
-
-            Path outDir = confluencePublisherBuildFolder.isPresent() ? confluencePublisherBuildFolder.get().asFile.toPath()
-                    : project.file("${project.buildDir}/docs/asciidoc-confluence-publisher").toPath()
+            Path outDir = getOutputDirectory().toPath()
 
             ConfluencePublisherMetadata confluencePublisherMetadata = asciidocConfluenceConverter.convert(asciidocPagesStructureProvider,
                     pageTitlePostProcessor,
@@ -188,6 +181,15 @@ class PublishToConfluenceTask extends DefaultTask {
                 proxyPort.isPresent() &&
                 proxyUsername.isPresent() &&
                 proxyPassword.isPresent()
+    }
+
+    String getOutputDir() {
+        outputDir ?: "${project.buildDir}/docs/confluence"
+    }
+
+    @OutputDirectory
+    File getOutputDirectory() {
+        project.file("${project.buildDir}/${getOutputDir()}")
     }
 
     @Option(option = 'convertOnly', description = 'Defines whether to only convert AsciiDoc sources, but not publish to Confluence (for checking documentation sanity without publishing).')

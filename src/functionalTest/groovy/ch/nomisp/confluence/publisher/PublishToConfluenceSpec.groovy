@@ -46,7 +46,7 @@ plugins {
 
 confluencePublisher {
     asciiDocRootFolder = file("\${projectDir}/docs/asciidoc")
-    confluencePublisherBuildFolder = file("\${buildDir}/docs/confluence")
+    //outputDir = "\${buildDir}/docs/confluence"
     rootConfluenceUrl = '$CONFLUENCE_ROOT_URL'
     spaceKey = 'GRADLE'
     ancestorId = 2555905

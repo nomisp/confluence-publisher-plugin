@@ -37,25 +37,25 @@ The task can be configured with the following properties:
 |The documentation root folder with the AsciiDoc file structure.
 |mandatory
 
-|confluencePublisherBuildFolder
-|Column 2, row 2
-|Column 3, row 2
+|outputDir
+|The output directory for the converted documents.
+|optional (default buildDir/docs/confluence)
 
 |rootConfluenceUrl
-|Column 2, row 3
-|Column 3, row 3
+|The root URL of the Confluence instance to publish to.
+|mandatory
 
 |spaceKey
-|Column 2, row 4
-|Column 3, row 4
+|The key of the Confluence space to publish to.
+|mandatory
 
 |ancestorId
-|Column 2, row 5
-|Column 3, row 5
+|The id of the ancestor page under which the pages are appended. Be aware that publishing will remove all pages under the configured ancestor id that are not part of the published documentation ("orphaned pages").
+|mandatory
 
 |username
-|Column 2, row 6
-|Column 3, row 6
+|The username of the user to use for publishing.
+|mandatory
 
 |password
 |The password of the user to use for publishing.
@@ -63,7 +63,7 @@ The task can be configured with the following properties:
 Note: when publishing to Confluence Cloud, an API token generated via the corresponding Atlassian account has to be used as password.
 
 Note: when publishing to on-premise Confluence with an API token, leave the username empty ("").
-|Column 3, row 7
+|mandatory
 
 |Column 1, row 8
 |Column 2, row 8
@@ -76,7 +76,7 @@ Example:
 ----
 confluencePublisher {
     asciiDocRootFolder = tasks.asciidoctor.sourceDir
-    confluencePublisherBuildFolder = file("${buildDir}/docs/confluence")
+    outputDir = "${buildDir}/docs/confluence"
     rootConfluenceUrl = 'https://myconfluence.url.com'
     spaceKey = 'MySpace'
     ancestorId = 3774579

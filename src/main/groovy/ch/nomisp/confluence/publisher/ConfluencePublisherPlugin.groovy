@@ -35,8 +35,7 @@ class ConfluencePublisherPlugin implements Plugin<Project> {
             setGroup(PLUGIN_GROUP)
             setDescription('Publishes generated asciidoc HTML to confluence.')
             asciiDocRootFolder = extension.asciiDocRootFolder
-            confluencePublisherBuildFolder = extension.confluencePublisherBuildFolder
-
+            outputDir = extension.outputDir
             rootConfluenceUrl = extension.rootConfluenceUrl
             spaceKey = extension.spaceKey
             username = extension.username
