@@ -189,7 +189,7 @@ class PublishToConfluenceTask extends DefaultTask {
 
     @OutputDirectory
     File getOutputDirectory() {
-        project.file("${project.buildDir}/${getOutputDir()}")
+        project.file(getOutputDir())
     }
 
     @Option(option = 'convertOnly', description = 'Defines whether to only convert AsciiDoc sources, but not publish to Confluence (for checking documentation sanity without publishing).')
