@@ -57,17 +57,9 @@ confluencePublisher {
 }
 
 """
-        createIndexAdoc()
     }
 
-    GradleRunner createGradleRunner() {
-        return GradleRunner.create()
-                .forwardOutput()
-                .withPluginClasspath()
-//                .withDebug(true)
-    }
-
-    private void createIndexAdoc() {
+    def createIndexAdoc() {
         File indexAdoc = testProjectDir.newFile('docs/asciidoc/index.adoc')
         indexAdoc << """
 = Test-Documentation of the confluence-publisher-plugin
@@ -84,6 +76,33 @@ confluencePublisher {
 == Content
 This is the content of index.adoc
 """
+    }
+
+    def createSubpageAdoc() {
+        testProjectDir.newFolder('docs/asciidoc/index')
+        File subpageAdoc = testProjectDir.newFile('docs/asciidoc/index/subpage.adoc')
+        subpageAdoc << """
+= Test-Documentation subpage
+:doctype: book
+:page-layout!:
+:toc: left
+:toclevels: 2
+:sectanchors:
+:sectlinks:
+:sectnums:
+
+[#user-toc]
+
+== Content
+This is the content of subpage.adoc
+"""
+    }
+
+    GradleRunner createGradleRunner() {
+        return GradleRunner.create()
+                .forwardOutput()
+                .withPluginClasspath()
+//                .withDebug(true)
     }
 
     private CloseableHttpClient recordHttpClientForRequestException(IOException exception) throws IOException {

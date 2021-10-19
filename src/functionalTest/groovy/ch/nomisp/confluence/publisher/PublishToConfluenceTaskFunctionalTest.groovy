@@ -19,6 +19,7 @@ class PublishToConfluenceTaskFunctionalTest extends PublishToConfluenceSpec {
     def "Task must convert to confluence format"() {
         given:
         createProject()
+        createIndexAdoc()
 
         when:
         def result = createGradleRunner()
@@ -33,6 +34,8 @@ class PublishToConfluenceTaskFunctionalTest extends PublishToConfluenceSpec {
     def "Task must publish to confluence"() {
         given:
         createProject()
+        createIndexAdoc()
+        createSubpageAdoc()
 
         when:
         def result = createGradleRunner()
