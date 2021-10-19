@@ -99,7 +99,7 @@ asciidoctor {
 }
 
 gitPublish {
-    System.setProperty('org.ajoberstar.grgit.auth.username', "${githubToken}")
+    System.setProperty('org.ajoberstar.grgit.auth.username', "${credentials.forKey('githubToken')}")
     // where to publish to (repo must exist)
     repoUri = "${gitHubUrl}"
 

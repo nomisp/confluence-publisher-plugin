@@ -89,8 +89,8 @@ class PublishToConfluenceTask extends DefaultTask {
     def publishToConfluence() {
         checkProperties()
         try {
-            String prefix = pageTitlePrefix.isPresent() ? pageTitlePrefix.get() : ''
-            String suffix = pageTitleSuffix.isPresent() ? pageTitleSuffix.get() : ''
+            String prefix = pageTitlePrefix.getOrElse('')
+            String suffix = pageTitleSuffix.getOrElse('')
             PageTitlePostProcessor pageTitlePostProcessor = new PrefixAndSuffixPageTitlePostProcessor(prefix, suffix)
 
             def encoding = sourceEncoding.isPresent() ? Charset.forName(sourceEncoding.get()) : StandardCharsets.UTF_8
@@ -100,6 +100,7 @@ class PublishToConfluenceTask extends DefaultTask {
             AsciidocConfluenceConverter asciidocConfluenceConverter = new AsciidocConfluenceConverter(spaceKey.get(), ancestorId.get().toString())
 
             Path outDir = getOutputDirectory().toPath()
+            logger.info("Converting into: ${outDir.toString()}")
 
             ConfluencePublisherMetadata confluencePublisherMetadata = asciidocConfluenceConverter.convert(asciidocPagesStructureProvider,
                     pageTitlePostProcessor,
