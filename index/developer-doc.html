@@ -444,7 +444,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="details">
 <span id="author" class="author">Peter Simon</span><br>
 <span id="email" class="email"><a href="mailto:nomisp@gmail.com">nomisp@gmail.com</a></span><br>
-<span id="revnumber">version 0.1.0-dev.11.uncommitted+initial.implementation.71e7472,</span>
+<span id="revnumber">version 0.1.0-dev.13.uncommitted+initial.implementation.7cd6ce2,</span>
 <span id="revdate">19.10.2021</span>
 </div>
 <div id="toc" class="toc2">
@@ -457,7 +457,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_local_build">1.3. Local build</a></li>
 </ul>
 </li>
-<li><a href="#_locally_try_out_the_plugins">2. Locally try out the plugins</a></li>
+<li><a href="#_publish_the_documentation_to_github_pages">2. Publish the documentation to GitHub-Pages</a></li>
+<li><a href="#_locally_try_out_the_plugins">3. Locally try out the plugins</a></li>
 </ul>
 </div>
 </div>
@@ -538,7 +539,38 @@ The description of the credentials plugin can be found <a href="https://github.c
 </div>
 </div>
 <div class="sect1">
-<h2 id="_locally_try_out_the_plugins"><a class="anchor" href="#_locally_try_out_the_plugins"></a><a class="link" href="#_locally_try_out_the_plugins">2. Locally try out the plugins</a></h2>
+<h2 id="_publish_the_documentation_to_github_pages"><a class="anchor" href="#_publish_the_documentation_to_github_pages"></a><a class="link" href="#_publish_the_documentation_to_github_pages">2. Publish the documentation to GitHub-Pages</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To publish the project documentation to GitHub pages just run:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">gradlew asciidoctor gitPublishPush</code></pre>
+</div>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+The GitHub token used to publish the documentation to GitHub has to be encrypted using the credentials-plugin.
+The description of the credentials plugin can be found <a href="https://github.com/etiennestuder/gradle-credentials-plugin">here</a>.
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">gradlew addCredentials --key githubToken --value &lt;tokenValue&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_locally_try_out_the_plugins"><a class="anchor" href="#_locally_try_out_the_plugins"></a><a class="link" href="#_locally_try_out_the_plugins">3. Locally try out the plugins</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>To try out the plugin in another project, the plugin can be published to the local maven repository.</p>
@@ -556,8 +588,8 @@ The description of the credentials plugin can be found <a href="https://github.c
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 0.1.0-dev.11.uncommitted+initial.implementation.71e7472<br>
-Last updated 2021-10-18 15:24:49 +0200
+Version 0.1.0-dev.13.uncommitted+initial.implementation.7cd6ce2<br>
+Last updated 2021-10-19 19:51:37 +0200
 </div>
 </div>
 </body>
