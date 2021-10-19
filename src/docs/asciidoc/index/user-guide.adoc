@@ -8,7 +8,7 @@
 :sectnums:
 
 == The Confluence publisher plugin
-The Confluence publisher plugin suite is a plugin to convert documentation written in
+The Confluence publisher plugin is a plugin to convert documentation written in
 asciidoc into the Confluence format.
 The converted documentation can be directly published to Confluence.
 This plugin makes use of the https://github.com/confluence-publisher/confluence-publisher[confluence-publisher] project

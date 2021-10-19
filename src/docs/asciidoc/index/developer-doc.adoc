@@ -45,6 +45,20 @@ The description of the credentials plugin can be found https://github.com/etienn
 gradlew addCredentials --key confluenceToken --value <tokenValue>
 ----
 
+== Publish the documentation to GitHub-Pages
+To publish the project documentation to GitHub pages just run:
+[source, bash]
+----
+gradlew asciidoctor gitPublishPush
+----
+[WARNING]
+The GitHub token used to publish the documentation to GitHub has to be encrypted using the credentials-plugin.
+The description of the credentials plugin can be found https://github.com/etiennestuder/gradle-credentials-plugin[here].
+[source, bash]
+----
+gradlew addCredentials --key githubToken --value <tokenValue>
+----
+
 == Locally try out the plugins
 To try out the plugin in another project, the plugin can be published to the local maven repository.
 [source, bash]

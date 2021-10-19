@@ -11,8 +11,8 @@
 
 [#user-toc]
 == About the Confluence publisher plugin
-The Confluence publisher Gradle plugin is a plugin to convert asciidoc generated HTML to Confluence compatible XHTML
-and publishes the documentation to Confluence.
+The Confluence publisher Gradle plugin is a plugin to convert documentation written in asciidoc to Confluence compatible XHTML
+and publish the documentation to Confluence.
 For further information about how to use the plugins, read the User guide.
 If you're a developer, check out the developer documentation on how to setup and build the project.
 
