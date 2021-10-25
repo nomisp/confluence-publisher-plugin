@@ -444,15 +444,19 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="details">
 <span id="author" class="author">Peter Simon</span><br>
 <span id="email" class="email"><a href="mailto:nomisp@gmail.com">nomisp@gmail.com</a></span><br>
-<span id="revnumber">version 0.1.0-dev.13.uncommitted+initial.implementation.7cd6ce2,</span>
-<span id="revdate">19.10.2021</span>
+<span id="revnumber">version 0.1.0,</span>
+<span id="revdate">25.10.2021</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
 <li><a href="#_the_confluence_publisher_plugin">1. The Confluence publisher plugin</a></li>
 <li><a href="#_available_tasks">2. Available tasks</a></li>
-<li><a href="#_configuration_of_the_publishtoconfluence_task">3. Configuration of the 'publishToConfluence' task</a></li>
+<li><a href="#_configuration_of_the_publishtoconfluence_task">3. Configuration of the 'publishToConfluence' task</a>
+<ul class="sectlevel2">
+<li><a href="#_commandline_arguments">3.1. Commandline arguments</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -546,9 +550,105 @@ This task converts the .adoc pages to the Confluence format.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock">mandatory</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Column 1, row 8</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Column 2, row 8</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Column 3, row 8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">notifyWatchers</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Defines whether to notify page/space watchers upon changes when re-publishing. If set to false, subscribers will not receive notifications, except for new page or attachment creations.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">optional (default true)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">publishingStrategy</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The strategy to use when publishing to confluence. Possible values:</p>
+<p class="tableblock">APPEND_TO_ANCESTOR: append the published pages to the ancestor</p>
+<p class="tableblock">REPLACE_ANCESTOR: replace the title and the content of the ancestor with those of the one single root page (requires the documentation source structure to contain exactly one single root page)</p>
+<p class="tableblock"><em>The values are defined in the enum: org.sahli.asciidoc.confluence.publisher.client.PublishingStrategy which can be imported for an easier use</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">optional (default APPEND_TO_ANCESTOR)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">orphanRemovalStrategy</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The strategy to use when detecting orphan pages (pages in Confluence not / no longer part of the documentation source structure) while publishing. Possible values:</p>
+<p class="tableblock">REMOVE_ORPHANS: remove all orphan pages under the ancestor from Confluence</p>
+<p class="tableblock">KEEP_ORPHANS: keep all orphan pages under the ancestor in Confluence (this might require manual cleanup of orphan pages in order to avoid future page name conflicts or obsolete pages)</p>
+<p class="tableblock"><em>The values are defined in the enum: org.sahli.asciidoc.confluence.publisher.client.OrphanRemovalStrategy which can be imported for an easier use</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">optional (default REMOVE_ORPHANS)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">pageTitlePrefix</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The prefix to be prepended to every page title.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">optional (default empty)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">pageTitleSuffix</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The suffix to be appended to every page title.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">optional (default empty)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">versionMessage</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The message that will be published with the changes into Page History comment. Note: Confluence only supports version messages for updated pages, but not when creating new pages.</p>
+<p class="tableblock"><strong>Untested</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">optional (default empty)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sourceEncoding</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The encoding of the AsciiDoc files.</p>
+<p class="tableblock"><strong>Untested</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">optional (default UTF-8)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">proxyScheme</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The scheme (http or https) used to connect to a forward proxy (in case a forward proxy is required to access the Confluence instance).</p>
+<p class="tableblock"><strong>Untested</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">optional (default empty)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">proxyHost</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The host of the forward proxy.</p>
+<p class="tableblock"><strong>Untested</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">optional (default empty)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">proxyPort</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The port of the forward proxy.</p>
+<p class="tableblock"><strong>Untested</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">optional (default empty)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">proxyUsername</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The username of the forward proxy (in case the forward proxy requires basic authentication).</p>
+<p class="tableblock"><strong>Untested</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">optional (default empty)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">proxyPassword</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The password of the forward proxy (in case the forward proxy requires basic authentication).</p>
+<p class="tableblock"><strong>Untested</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">optional (default empty)</p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect2">
+<h3 id="_commandline_arguments"><a class="anchor" href="#_commandline_arguments"></a><a class="link" href="#_commandline_arguments">3.1. Commandline arguments</a></h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Argument</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Constraint</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">--skipSslVerification</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Defines whether to disable SSL certificate verification when connecting to Confluence via HTTPS while using self- signed certificates.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">optional (default false)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">--convertOnly</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Defines whether to only convert AsciiDoc sources, but not publish to Confluence (for checking documentation sanity without publishing).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">optional (default false)</p></td>
 </tr>
 </tbody>
 </table>
@@ -562,7 +662,7 @@ This task converts the .adoc pages to the Confluence format.</p>
     outputDir = "${buildDir}/docs/confluence"
     rootConfluenceUrl = 'https://myconfluence.url.com'
     spaceKey = 'MySpace'
-    ancestorId = 3774579
+    ancestorId = 1234567
     username = 'MyConfluenceUser'
     password = 'MySecretPassword'
     notifyWatchers = false
@@ -572,10 +672,11 @@ This task converts the .adoc pages to the Confluence format.</p>
 </div>
 </div>
 </div>
+</div>
 <div id="footer">
 <div id="footer-text">
-Version 0.1.0-dev.13.uncommitted+initial.implementation.7cd6ce2<br>
-Last updated 2021-10-19 19:44:02 +0200
+Version 0.1.0<br>
+Last updated 2021-10-25 18:59:45 +0200
 </div>
 </div>
 </body>
