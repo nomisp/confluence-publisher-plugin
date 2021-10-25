@@ -1,0 +1,133 @@
+plugins {
+    // Apply the Java Gradle plugin development plugin to add support for developing Gradle plugins
+    id 'java-gradle-plugin'
+
+    // Apply the Groovy plugin to add support for Groovy
+    id 'groovy'
+
+    // AsciiDoc plugins
+    id 'org.asciidoctor.base' version "${asciiDocPluginVersion}"
+    id 'org.asciidoctor.jvm.convert' version "${asciiDocPluginVersion}"
+    id 'org.asciidoctor.jvm.gems' version "${asciiDocPluginVersion}"
+    id 'org.ajoberstar.git-publish' version "${asciiDocGitPublishPluginVersion}"
+
+    // Publish plugin to publish the confluence-publisher-plugin to the Gradle plugin portal
+    id "com.gradle.plugin-publish" version "${pluginPublishPluginVersion}"
+
+    // Credentials plugin to avoid passwords or tokens in plain text
+    id 'nu.studer.credentials' version "${credentialsPluginVersion}"
+}
+
+group = 'ch.nomisp'
+version = '0.1.0'
+
+repositories {
+    // Use Maven Central for resolving dependencies.
+    mavenCentral()
+
+}
+
+dependencies {
+//    // https://mvnrepository.com/artifact/org.sahli.asciidoc.confluence.publisher/asciidoc-confluence-publisher
+//    implementation 'org.sahli.asciidoc.confluence.publisher:asciidoc-confluence-publisher:${asciidocConfluencePublisherVersion}'
+
+    // https://mvnrepository.com/artifact/org.sahli.asciidoc.confluence.publisher/asciidoc-confluence-publisher-client
+    implementation "org.sahli.asciidoc.confluence.publisher:asciidoc-confluence-publisher-client:${asciidocConfluencePublisherVersion}"
+
+    // https://mvnrepository.com/artifact/org.sahli.asciidoc.confluence.publisher/asciidoc-confluence-publisher-converter
+    implementation "org.sahli.asciidoc.confluence.publisher:asciidoc-confluence-publisher-converter:${asciidocConfluencePublisherVersion}"
+
+    // Use the awesome Spock testing and specification framework
+    testImplementation 'org.spockframework:spock-core:2.0-groovy-3.0'
+    testImplementation gradleTestKit()
+}
+
+gradlePlugin {
+    // Define the plugin
+    plugins {
+        confluencePublisherPlugin {
+            id = 'ch.nomisp.confluence.publisher'
+            implementationClass = 'ch.nomisp.confluence.publisher.ConfluencePublisherPlugin'
+        }
+    }
+}
+
+// Add a source set for the functional test suite
+sourceSets {
+    functionalTest {
+    }
+}
+
+gradlePlugin.testSourceSets(sourceSets.functionalTest)
+configurations.functionalTestImplementation.extendsFrom(configurations.testImplementation)
+
+// Add a task to run the functional tests
+tasks.register('functionalTest', Test) {
+    testClassesDirs = sourceSets.functionalTest.output.classesDirs
+    classpath = sourceSets.functionalTest.runtimeClasspath
+    // the confluence api token has to be added in advance using: addCredentials --key confluenceToken --value <theToken>
+    systemProperty 'confluenceToken', credentials.forKey('confluenceToken')
+    useJUnitPlatform()
+}
+
+tasks.named('check') {
+    // Run the functional tests as part of `check`
+    dependsOn(tasks.functionalTest)
+}
+
+tasks.named('test') {
+    // Use JUnit Platform for unit tests.
+    useJUnitPlatform()
+}
+
+asciidoctorj {
+    modules {
+        diagram.version "${asciidoctorjDiagramVersion}"
+    }
+
+    attributes revnumber: { project.version }
+    attributes revdate: {(new Date()).format('dd.MM.yyyy')}
+//    attributes revremark: 'First draft'
+    attributes author: {'Peter Simon'}
+    attributes email: {'nomisp@gmail.com'}
+    attributes docinfo1: 'true'
+    attributes icons: 'font'
+}
+
+asciidoctor {
+    dependsOn asciidoctorGemsPrepare
+}
+
+gitPublish {
+    System.setProperty('org.ajoberstar.grgit.auth.username', "${credentials.forKey('githubToken')}")
+    // where to publish to (repo must exist)
+    repoUri = "${gitHubUrl}"
+
+    // where to fetch from prior to fetching from the remote (i.e. a local repo to save time)
+    referenceRepoUri = "file:///${rootProject.projectDir}/"
+
+    // branch will be created if it doesn't exist
+    branch = 'gh-pages'
+
+    contents {
+        from project.tasks.asciidoctor
+    }
+}
+
+pluginBundle {
+    website = 'https://github.com/nomisp/confluence-publisher-plugin'
+    vcsUrl = 'https://github.com/nomisp/confluence-publisher-plugin'
+    description = 'Gradle plugin to convert and publish documentation written in AsciiDoc to Atlassian Confluence.'
+    tags = ['asciidoc', 'confluence']
+
+    plugins {
+        confluencePublisherPlugin {
+            displayName = 'confluence-publisher-plugin'
+        }
+    }
+
+    mavenCoordinates {
+        groupId = 'ch.nomisp'
+        artifactId = 'confluence-publisher-plugin'
+    }
+}

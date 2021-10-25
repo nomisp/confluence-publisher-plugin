@@ -1,0 +1,25 @@
+= Confluence publisher Gradle plugin Release Notes
+:doctype: book
+:page-layout!:
+//:toc2:
+:toc: left
+:toclevels: 2
+:sectanchors:
+:sectlinks:
+:sectnums:
+
+== Release 0.1.0
+
+=== New and Noteworthy/Highlights/What's New
+This is the first release of the Confluence publisher Gradle plugin.
+
+=== Additional Features and Changes/Minor Features and Changes/Other Features and Changes
+
+=== Changelog
+Initial release
+
+=== Deprecations
+
+=== Known problems
+
+// see: https://github.com/asciidoctor/asciidoctor-documentation-planning/blob/master/templates/release-notes-template.adoc
