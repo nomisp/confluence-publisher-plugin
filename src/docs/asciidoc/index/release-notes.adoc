@@ -8,7 +8,7 @@
 :sectlinks:
 :sectnums:
 
-== Release 1.0.0
+== Release 0.1.0
 
 === New and Noteworthy/Highlights/What's New
 This is the first release of the Confluence publisher Gradle plugin.

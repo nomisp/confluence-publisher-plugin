@@ -65,9 +65,94 @@ Note: when publishing to Confluence Cloud, an API token generated via the corres
 Note: when publishing to on-premise Confluence with an API token, leave the username empty ("").
 |mandatory
 
-|Column 1, row 8
-|Column 2, row 8
-|Column 3, row 8
+|notifyWatchers
+|Defines whether to notify page/space watchers upon changes when re-publishing. If set to false, subscribers will not receive notifications, except for new page or attachment creations.
+|optional (default true)
+
+|publishingStrategy
+|The strategy to use when publishing to confluence. Possible values:
+
+APPEND_TO_ANCESTOR: append the published pages to the ancestor
+
+REPLACE_ANCESTOR: replace the title and the content of the ancestor with those of the one single root page (requires the documentation source structure to contain exactly one single root page)
+
+_The values are defined in the enum: org.sahli.asciidoc.confluence.publisher.client.PublishingStrategy which can be imported for an easier use_
+|optional (default APPEND_TO_ANCESTOR)
+
+|orphanRemovalStrategy
+|The strategy to use when detecting orphan pages (pages in Confluence not / no longer part of the documentation source structure) while publishing. Possible values:
+
+REMOVE_ORPHANS: remove all orphan pages under the ancestor from Confluence
+
+KEEP_ORPHANS: keep all orphan pages under the ancestor in Confluence (this might require manual cleanup of orphan pages in order to avoid future page name conflicts or obsolete pages)
+
+_The values are defined in the enum: org.sahli.asciidoc.confluence.publisher.client.OrphanRemovalStrategy which can be imported for an easier use_
+|optional (default REMOVE_ORPHANS)
+
+|pageTitlePrefix
+|The prefix to be prepended to every page title.
+|optional (default empty)
+
+|pageTitleSuffix
+|The suffix to be appended to every page title.
+|optional (default empty)
+
+|versionMessage
+|The message that will be published with the changes into Page History comment. Note: Confluence only supports version messages for updated pages, but not when creating new pages.
+
+*Untested*
+|optional (default empty)
+
+|sourceEncoding
+|The encoding of the AsciiDoc files.
+
+*Untested*
+|optional (default UTF-8)
+
+|proxyScheme
+|The scheme (http or https) used to connect to a forward proxy (in case a forward proxy is required to access the Confluence instance).
+
+*Untested*
+|optional (default empty)
+
+|proxyHost
+|The host of the forward proxy.
+
+*Untested*
+|optional (default empty)
+
+|proxyPort
+|The port of the forward proxy.
+
+*Untested*
+|optional (default empty)
+
+|proxyUsername
+|The username of the forward proxy (in case the forward proxy requires basic authentication).
+
+*Untested*
+|optional (default empty)
+
+|proxyPassword
+|The password of the forward proxy (in case the forward proxy requires basic authentication).
+
+*Untested*
+|optional (default empty)
+|===
+
+=== Commandline arguments
+
+|===
+|Argument |Description |Constraint
+
+|--skipSslVerification
+|Defines whether to disable SSL certificate verification when connecting to Confluence via HTTPS while using self- signed certificates.
+|optional (default false)
+
+|--convertOnly
+|Defines whether to only convert AsciiDoc sources, but not publish to Confluence (for checking documentation sanity without publishing).
+|optional (default false)
+
 |===
 
 
@@ -79,7 +164,7 @@ confluencePublisher {
     outputDir = "${buildDir}/docs/confluence"
     rootConfluenceUrl = 'https://myconfluence.url.com'
     spaceKey = 'MySpace'
-    ancestorId = 3774579
+    ancestorId = 1234567
     username = 'MyConfluenceUser'
     password = 'MySecretPassword'
     notifyWatchers = false
