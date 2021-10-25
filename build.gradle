@@ -5,21 +5,21 @@ plugins {
     // Apply the Groovy plugin to add support for Groovy
     id 'groovy'
 
-    // Apply the maven publish plugin
-    id 'maven-publish'
-
-    // Netflix release plugin
-    id 'nebula.release' version "${nebulaReleasePluginVersion}"
-
     // AsciiDoc plugins
     id 'org.asciidoctor.base' version "${asciiDocPluginVersion}"
     id 'org.asciidoctor.jvm.convert' version "${asciiDocPluginVersion}"
     id 'org.asciidoctor.jvm.gems' version "${asciiDocPluginVersion}"
     id 'org.ajoberstar.git-publish' version "${asciiDocGitPublishPluginVersion}"
 
+    // Publish plugin to publish the confluence-publisher-plugin to the Gradle plugin portal
+    id "com.gradle.plugin-publish" version "${pluginPublishPluginVersion}"
+
     // Credentials plugin to avoid passwords or tokens in plain text
     id 'nu.studer.credentials' version "${credentialsPluginVersion}"
 }
+
+group = 'ch.nomisp'
+version = '0.1.0'
 
 repositories {
     // Use Maven Central for resolving dependencies.
@@ -45,7 +45,7 @@ dependencies {
 gradlePlugin {
     // Define the plugin
     plugins {
-        publisher {
+        confluencePublisherPlugin {
             id = 'ch.nomisp.confluence.publisher'
             implementationClass = 'ch.nomisp.confluence.publisher.ConfluencePublisherPlugin'
         }
@@ -111,5 +111,23 @@ gitPublish {
 
     contents {
         from project.tasks.asciidoctor
+    }
+}
+
+pluginBundle {
+    website = 'https://github.com/nomisp/confluence-publisher-plugin'
+    vcsUrl = 'https://github.com/nomisp/confluence-publisher-plugin'
+    description = 'Gradle plugin to convert and publish documentation written in AsciiDoc to Atlassian Confluence.'
+    tags = ['asciidoc', 'confluence']
+
+    plugins {
+        confluencePublisherPlugin {
+            displayName = 'confluence-publisher-plugin'
+        }
+    }
+
+    mavenCoordinates {
+        groupId = 'ch.nomisp'
+        artifactId = 'confluence-publisher-plugin'
     }
 }
