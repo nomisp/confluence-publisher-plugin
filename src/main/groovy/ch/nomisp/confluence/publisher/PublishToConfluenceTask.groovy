@@ -47,7 +47,7 @@ class PublishToConfluenceTask extends DefaultTask {
     @Internal
     final Property<String> pageTitleSuffix = project.objects.property(String)
     @Internal
-    final Property<Integer> ancestorId = project.objects.property(Integer)
+    final Property<String> ancestorId = project.objects.property(String)
     @Internal
     final Property<String> versionMessage = project.objects.property(String)
     @Internal
@@ -97,7 +97,7 @@ class PublishToConfluenceTask extends DefaultTask {
 //            Path asciiDocFolder = asciiDocRootFolder.isPresent() ? asciiDocRootFolder.get().asFile.toPath() : project.projectDir.toPath().resolve('src/docs')
             AsciidocPagesStructureProvider asciidocPagesStructureProvider = new FolderBasedAsciidocPagesStructureProvider(asciiDocRootFolder.get().asFile.toPath(), encoding)
 
-            AsciidocConfluenceConverter asciidocConfluenceConverter = new AsciidocConfluenceConverter(spaceKey.get(), ancestorId.get().toString())
+            AsciidocConfluenceConverter asciidocConfluenceConverter = new AsciidocConfluenceConverter(spaceKey.get(), ancestorId.get())
 
             Path outDir = getOutputDirectory().toPath()
             logger.info("Converting into: ${outDir.toString()}")
