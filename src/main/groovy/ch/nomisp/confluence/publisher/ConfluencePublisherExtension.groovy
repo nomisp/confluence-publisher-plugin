@@ -18,7 +18,7 @@ class ConfluencePublisherExtension {
     final Property<String> password
     final Property<String> pageTitlePrefix
     final Property<String> pageTitleSuffix
-    final Property<Integer> ancestorId
+    final Property<String> ancestorId
     final Property<String> versionMessage
     final Property<Boolean> notifyWatchers
 
@@ -48,7 +48,7 @@ class ConfluencePublisherExtension {
         password = objects.property(String)
         pageTitlePrefix = objects.property(String)
         pageTitleSuffix = objects.property(String)
-        ancestorId = objects.property(Integer)
+        ancestorId = objects.property(String)
         versionMessage = objects.property(String)
         notifyWatchers = objects.property(Boolean)
 
