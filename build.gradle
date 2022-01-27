@@ -16,10 +16,13 @@ plugins {
 
     // Credentials plugin to avoid passwords or tokens in plain text
     id 'nu.studer.credentials' version "${credentialsPluginVersion}"
+
+    // eat your own food
+    id 'ch.nomisp.confluence.publisher' version "${confluencePublisherPluginVersion}"
 }
 
 group = 'ch.nomisp'
-version = '0.1.0'
+version = '0.2.0'
 
 repositories {
     // Use Maven Central for resolving dependencies.
@@ -50,6 +53,11 @@ gradlePlugin {
             implementationClass = 'ch.nomisp.confluence.publisher.ConfluencePublisherPlugin'
         }
     }
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
 }
 
 // Add a source set for the functional test suite
@@ -130,4 +138,14 @@ pluginBundle {
         groupId = 'ch.nomisp'
         artifactId = 'confluence-publisher-plugin'
     }
+}
+
+confluencePublisher {
+    asciiDocRootFolder = asciidoctor.sourceDir
+    rootConfluenceUrl = 'https://nomisp.atlassian.net/wiki'
+    spaceKey = 'GRADLE'
+    ancestorId = 262146
+    username = 'nomisp@gmail.com'
+    password = credentials.forKey('confluenceToken')
+    notifyWatchers = false
 }
