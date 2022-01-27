@@ -1,6 +1,6 @@
 package ch.nomisp.confluence.publisher
 
-import spock.lang.Ignore
+//import spock.lang.Ignore
 
 class PublishToConfluenceTaskFunctionalTest extends PublishToConfluenceSpec {
 
@@ -33,7 +33,7 @@ class PublishToConfluenceTaskFunctionalTest extends PublishToConfluenceSpec {
         result.output.contains("Publishing to Confluence skipped ('convert only' is enabled)")
     }
 
-    @Ignore("can only be run with credentials to  https://nomisp.atlassian.net/")
+//    @Ignore("can only be run with credentials to  https://nomisp.atlassian.net/")
     def "Task must publish to confluence"() {
         given:
         createProject()
