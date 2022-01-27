@@ -16,6 +16,9 @@ plugins {
 
     // Credentials plugin to avoid passwords or tokens in plain text
     id 'nu.studer.credentials' version "${credentialsPluginVersion}"
+
+    // eat your own food
+    id 'ch.nomisp.confluence.publisher' version "${confluencePublisherPluginVersion}"
 }
 
 group = 'ch.nomisp'
@@ -130,4 +133,14 @@ pluginBundle {
         groupId = 'ch.nomisp'
         artifactId = 'confluence-publisher-plugin'
     }
+}
+
+confluencePublisher {
+    asciiDocRootFolder = asciidoctor.sourceDir
+    rootConfluenceUrl = 'https://nomisp.atlassian.net/wiki'
+    spaceKey = 'GRADLE'
+    ancestorId = 262146
+    username = 'nomisp@gmail.com'
+    password = credentials.forKey('confluenceToken')
+    notifyWatchers = false
 }
