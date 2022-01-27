@@ -164,7 +164,7 @@ confluencePublisher {
     outputDir = "${buildDir}/docs/confluence"
     rootConfluenceUrl = 'https://myconfluence.url.com'
     spaceKey = 'MySpace'
-    ancestorId = 1234567
+    ancestorId = '1234567'
     username = 'MyConfluenceUser'
     password = 'MySecretPassword'
     notifyWatchers = false

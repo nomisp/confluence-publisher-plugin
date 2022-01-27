@@ -144,7 +144,7 @@ confluencePublisher {
     asciiDocRootFolder = asciidoctor.sourceDir
     rootConfluenceUrl = 'https://nomisp.atlassian.net/wiki'
     spaceKey = 'GRADLE'
-    ancestorId = 262146
+    ancestorId = '262146'
     username = 'nomisp@gmail.com'
     password = credentials.forKey('confluenceToken')
     notifyWatchers = false
