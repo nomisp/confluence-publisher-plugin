@@ -8,6 +8,24 @@
 :sectlinks:
 :sectnums:
 
+== Release 0.2.0
+
+=== New and Noteworthy/Highlights/What's New
+Support of Strings as ancestor id (possible on Confluence cloud, that Integer is not enough).
+
+Java 8 compatibility.
+
+=== Additional Features and Changes/Minor Features and Changes/Other Features and Changes
+
+=== Changelog
+* Use Strings as ancestor id.
+* Java 8 compatibility.
+
+=== Deprecations
+
+=== Known problems
+
+
 == Release 0.1.0
 
 === New and Noteworthy/Highlights/What's New
