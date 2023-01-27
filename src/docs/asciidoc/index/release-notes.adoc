@@ -8,6 +8,20 @@
 :sectlinks:
 :sectnums:
 
+== Release 0.3.0
+
+=== New and Noteworthy/Highlights/What's New
+Upgraded dependency version of https://github.com/confluence-publisher/confluence-publisher[Confluence Publisher] to https://github.com/confluence-publisher/confluence-publisher/releases/tag/0.17.1[0.17.1].
+
+=== Additional Features and Changes/Minor Features and Changes/Other Features and Changes
+
+=== Changelog
+* Upgraded dependency version of Confluence Publisher to 0.17.1.
+
+=== Deprecations
+
+=== Known problems
+
 == Release 0.2.0
 
 === New and Noteworthy/Highlights/What's New
