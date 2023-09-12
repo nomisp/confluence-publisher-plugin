@@ -56,11 +56,16 @@ class PublishToConfluenceTask extends DefaultTask {
     @Internal
     final Property<String> sourceEncoding = project.objects.property(String)
     @Internal
-    final Property<PublishingStrategy> publishingStrategy = project.objects.property(PublishingStrategy) // APPEND_TO_ANCESTOR (default) | REPLACE_ANCESTOR
+    final Property<PublishingStrategy> publishingStrategy = project.objects.property(PublishingStrategy)
+    // APPEND_TO_ANCESTOR (default) | REPLACE_ANCESTOR
     @Internal
-    final Property<OrphanRemovalStrategy> orphanRemovalStrategy = project.objects.property(OrphanRemovalStrategy) // REMOVE_ORPHANS (default) | KEEP_ORPHANS
+    final Property<OrphanRemovalStrategy> orphanRemovalStrategy = project.objects.property(OrphanRemovalStrategy)
+    // REMOVE_ORPHANS (default) | KEEP_ORPHANS
     @Internal
     final Property<Integer> maxRequestsPerSecond = project.objects.property(Integer)
+
+    @Internal
+    final Property<Integer> connectionTimeToLive = project.objects.property(Integer)
 
     @Internal
     final Property<String> proxyScheme = project.objects.property(String)
@@ -119,12 +124,14 @@ class PublishToConfluenceTask extends DefaultTask {
                             this.proxyPassword.get())
                 }
 
-                Double maxReqPerSec = maxRequestsPerSecond.isPresent() ? maxRequestsPerSecond.get() : Double.valueOf(10.0d)
+                Double maxReqPerSec = maxRequestsPerSecond.getOrElse(10)
+                Integer connectionTTL = connectionTimeToLive.getOrElse(5000)
                 ConfluenceRestClient confluenceRestClient = new ConfluenceRestClient(rootConfluenceUrl.get(),
                         proxyConfiguration,
                         this.skipSslVerification,
                         this.enableHttpClientSystemProperties,
                         maxReqPerSec,
+                        connectionTTL,
                         this.username.get(),
                         this.password.get())
                 ConfluencePublisherListener confluencePublisherListener = new LoggingConfluencePublisherListener(logger)
