@@ -1,3 +1,5 @@
+import org.sahli.asciidoc.confluence.publisher.client.OrphanRemovalStrategy
+
 plugins {
     // Apply the Java Gradle plugin development plugin to add support for developing Gradle plugins
     id 'java-gradle-plugin'
@@ -22,7 +24,7 @@ plugins {
 }
 
 group = 'ch.nomisp'
-version = '0.3.0'
+version = '0.4.0'
 
 repositories {
     // Use Maven Central for resolving dependencies.
@@ -56,8 +58,8 @@ gradlePlugin {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
 }
 
 // Add a source set for the functional test suite
@@ -148,4 +150,5 @@ confluencePublisher {
     username = 'nomisp@gmail.com'
     password = credentials.forKey('confluenceToken')
     notifyWatchers = false
+    orphanRemovalStrategy = OrphanRemovalStrategy.KEEP_ORPHANS
 }
