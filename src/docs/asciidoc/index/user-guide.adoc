@@ -33,7 +33,7 @@ The task can be configured with the following properties:
 |===
 |Property |Description |Constraint
 
-|asciidocRootFolder
+|asciiDocRootFolder
 |The documentation root folder with the AsciiDoc file structure.
 |mandatory
 

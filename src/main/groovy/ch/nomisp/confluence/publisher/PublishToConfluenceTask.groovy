@@ -56,11 +56,9 @@ class PublishToConfluenceTask extends DefaultTask {
     @Internal
     final Property<String> sourceEncoding = project.objects.property(String)
     @Internal
-    final Property<PublishingStrategy> publishingStrategy = project.objects.property(PublishingStrategy)
-    // APPEND_TO_ANCESTOR (default) | REPLACE_ANCESTOR
+    final Property<PublishingStrategy> publishingStrategy = project.objects.property(PublishingStrategy) // APPEND_TO_ANCESTOR (default) | REPLACE_ANCESTOR
     @Internal
-    final Property<OrphanRemovalStrategy> orphanRemovalStrategy = project.objects.property(OrphanRemovalStrategy)
-    // REMOVE_ORPHANS (default) | KEEP_ORPHANS
+    final Property<OrphanRemovalStrategy> orphanRemovalStrategy = project.objects.property(OrphanRemovalStrategy) // REMOVE_ORPHANS (default) | KEEP_ORPHANS
     @Internal
     final Property<Integer> maxRequestsPerSecond = project.objects.property(Integer)
 

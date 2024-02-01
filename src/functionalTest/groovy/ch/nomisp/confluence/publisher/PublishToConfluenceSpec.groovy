@@ -49,11 +49,11 @@ confluencePublisher {
     //outputDir = "\${buildDir}/docs/confluence"
     rootConfluenceUrl = '$CONFLUENCE_ROOT_URL'
     spaceKey = 'GRADLE'
-    ancestorId = '30539777'
+    ancestorId = '30572558'
     username = 'nomisp@gmail.com'
     password = '$CONFLUENCE_API_TOKEN'
     pageTitlePrefix = 'Generated-Test -- '
-    notifyWatchers = false
+    notifyWatchers = true
 }
 
 """
