@@ -114,12 +114,12 @@ class PublishToConfluenceTask extends DefaultTask {
                 logger.info("Publishing to Confluence skipped ('convert only' is enabled)")
             } else {
                 ConfluenceRestClient.ProxyConfiguration proxyConfiguration = null
-                if (useProxy()) {
-                    proxyConfiguration = new ConfluenceRestClient.ProxyConfiguration(this.proxyScheme.get(),
+                if (proxyHost.isPresent()) {
+                    proxyConfiguration = new ConfluenceRestClient.ProxyConfiguration(this.proxyScheme.getOrElse('http'),
                             this.proxyHost.get(),
-                            this.proxyPort.get(),
-                            this.proxyUsername.get(),
-                            this.proxyPassword.get())
+                            this.proxyPort.getOrElse(80),
+                            this.proxyUsername.getOrNull(),
+                            this.proxyPassword.getOrNull())
                 }
 
                 Double maxReqPerSec = maxRequestsPerSecond.getOrElse(10)
@@ -179,14 +179,6 @@ class PublishToConfluenceTask extends DefaultTask {
             throw new GradleException('password spaceKey not set')
         }
 
-    }
-
-    private boolean useProxy() {
-        return proxyScheme.isPresent() &&
-                proxyHost.isPresent() &&
-                proxyPort.isPresent() &&
-                proxyUsername.isPresent() &&
-                proxyPassword.isPresent()
     }
 
     String getOutputDir() {
