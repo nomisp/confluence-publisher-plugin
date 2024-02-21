@@ -8,6 +8,20 @@
 :sectlinks:
 :sectnums:
 
+== Release 0.5.0
+
+=== New and Noteworthy/Highlights/What's New
+Fixed proxy configuration to be able to use a proxy without username and password.
+
+=== Additional Features and Changes/Minor Features and Changes/Other Features and Changes
+
+=== Changelog
+* Fixed reported issue concerning the proxy configuration.
+
+=== Deprecations
+
+=== Known problems
+
 == Release 0.4.0
 
 === New and Noteworthy/Highlights/What's New
