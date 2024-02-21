@@ -113,10 +113,10 @@ _The values are defined in the enum: org.sahli.asciidoc.confluence.publisher.cli
 |The scheme (http or https) used to connect to a forward proxy (in case a forward proxy is required to access the Confluence instance).
 
 *Untested*
-|optional (default empty)
+|optional (default http)
 
 |proxyHost
-|The host of the forward proxy.
+|The host of the forward proxy. Mandatory if a proxy is used.
 
 *Untested*
 |optional (default empty)
@@ -125,7 +125,7 @@ _The values are defined in the enum: org.sahli.asciidoc.confluence.publisher.cli
 |The port of the forward proxy.
 
 *Untested*
-|optional (default empty)
+|optional (default 80)
 
 |proxyUsername
 |The username of the forward proxy (in case the forward proxy requires basic authentication).
