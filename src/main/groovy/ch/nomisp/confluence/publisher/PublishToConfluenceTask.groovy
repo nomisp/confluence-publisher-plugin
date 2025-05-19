@@ -6,19 +6,15 @@ import org.gradle.api.GradleException
 import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.logging.Logger
 import org.gradle.api.provider.Property
-import org.gradle.api.tasks.Input
-import org.gradle.api.tasks.InputDirectory
-import org.gradle.api.tasks.Internal
-import org.gradle.api.tasks.Optional
-import org.gradle.api.tasks.OutputDirectory
-import org.gradle.api.tasks.TaskAction
+import org.gradle.api.tasks.*
 import org.gradle.api.tasks.options.Option
 import org.sahli.asciidoc.confluence.publisher.client.ConfluencePublisher
 import org.sahli.asciidoc.confluence.publisher.client.ConfluencePublisherListener
 import org.sahli.asciidoc.confluence.publisher.client.OrphanRemovalStrategy
 import org.sahli.asciidoc.confluence.publisher.client.PublishingStrategy
 import org.sahli.asciidoc.confluence.publisher.client.http.ConfluencePage
-import org.sahli.asciidoc.confluence.publisher.client.http.ConfluenceRestClient
+import org.sahli.asciidoc.confluence.publisher.client.http.ConfluenceRestV2Client
+import org.sahli.asciidoc.confluence.publisher.client.http.ProxyConfiguration
 import org.sahli.asciidoc.confluence.publisher.client.metadata.ConfluencePublisherMetadata
 import org.sahli.asciidoc.confluence.publisher.converter.*
 
@@ -113,9 +109,9 @@ class PublishToConfluenceTask extends DefaultTask {
             if (this.convertOnly) {
                 logger.info("Publishing to Confluence skipped ('convert only' is enabled)")
             } else {
-                ConfluenceRestClient.ProxyConfiguration proxyConfiguration = null
+                ProxyConfiguration proxyConfiguration = null
                 if (proxyHost.isPresent()) {
-                    proxyConfiguration = new ConfluenceRestClient.ProxyConfiguration(this.proxyScheme.getOrElse('http'),
+                    proxyConfiguration = new ProxyConfiguration(this.proxyScheme.getOrElse('http'),
                             this.proxyHost.get(),
                             this.proxyPort.getOrElse(80),
                             this.proxyUsername.getOrNull(),
@@ -124,7 +120,7 @@ class PublishToConfluenceTask extends DefaultTask {
 
                 Double maxReqPerSec = maxRequestsPerSecond.getOrElse(10)
                 Integer connectionTTL = connectionTimeToLive.getOrElse(5000)
-                ConfluenceRestClient confluenceRestClient = new ConfluenceRestClient(rootConfluenceUrl.get(),
+                ConfluenceRestV2Client confluenceRestClient = new ConfluenceRestV2Client(rootConfluenceUrl.get(),
                         proxyConfiguration,
                         this.skipSslVerification,
                         this.enableHttpClientSystemProperties,
