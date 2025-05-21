@@ -22,6 +22,7 @@ class ConfluencePublisherExtension {
     final Property<String> versionMessage
     final Property<Boolean> notifyWatchers
 
+    final Property<String> restApiVersion
     final Property<String> sourceEncoding
     final Property<PublishingStrategy> publishingStrategy // APPEND_TO_ANCESTOR (default) | REPLACE_ANCESTOR
     final Property<OrphanRemovalStrategy> orphanRemovalStrategy // REMOVE_ORPHANS (default) | KEEP_ORPHANS
@@ -52,6 +53,7 @@ class ConfluencePublisherExtension {
         versionMessage = objects.property(String)
         notifyWatchers = objects.property(Boolean)
 
+        restApiVersion = objects.property(String)
         sourceEncoding = objects.property(String)
         publishingStrategy = objects.property(PublishingStrategy) // APPEND_TO_ANCESTOR (default) | REPLACE_ANCESTOR
         orphanRemovalStrategy = objects.property(OrphanRemovalStrategy) // REMOVE_ORPHANS (default) | KEEP_ORPHANS

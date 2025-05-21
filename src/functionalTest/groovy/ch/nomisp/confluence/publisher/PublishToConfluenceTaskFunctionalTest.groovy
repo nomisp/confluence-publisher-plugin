@@ -49,4 +49,21 @@ class PublishToConfluenceTaskFunctionalTest extends PublishToConfluenceSpec {
         then:
         result.output.contains("Publishing page")
     }
+
+//    @Ignore("can only be run with credentials to  https://nomisp.atlassian.net/")
+    def "Task must publish to confluence using Rest API v1"() {
+        given:
+        createProjectV1API()
+        createV1IndexAdoc()
+        createV1SubpageAdoc()
+
+        when:
+        def result = createGradleRunner()
+                .withArguments(['publishToConfluence', '--skipSslVerification', '--info'])
+                .withProjectDir(testProjectDir.root)
+                .build()
+
+        then:
+        result.output.contains("Publishing page")
+    }
 }

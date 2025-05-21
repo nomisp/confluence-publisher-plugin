@@ -89,6 +89,10 @@ KEEP_ORPHANS: keep all orphan pages under the ancestor in Confluence (this might
 _The values are defined in the enum: org.sahli.asciidoc.confluence.publisher.client.OrphanRemovalStrategy which can be imported for an easier use_
 |optional (default REMOVE_ORPHANS)
 
+|restApiVersion
+|In order to use the deprecated REST API v1, set to v1.
+|optional (default empty)
+
 |pageTitlePrefix
 |The prefix to be prepended to every page title.
 |optional (default empty)
