@@ -26,6 +26,7 @@ class PublishToConfluenceSpec extends Specification{
     protected File buildFile
 
     private File asciiDocDir
+    private File asciiDocV1Dir
 
     def setup() {
         testProjectDir.create()
@@ -35,6 +36,8 @@ class PublishToConfluenceSpec extends Specification{
         buildFile = testProjectDir.newFile('build.gradle')
         asciiDocDir = testProjectDir.newFolder('docs/asciidoc')
         asciiDocDir.createNewFile()
+        asciiDocV1Dir = testProjectDir.newFolder('docs/asciidocV1')
+        asciiDocV1Dir.createNewFile()
     }
 
     def createProject() {
@@ -95,6 +98,70 @@ This is the content of index.adoc
 
 == Content
 This is the content of subpage.adoc
+"""
+    }
+
+    def createProjectV1API() {
+        buildFile << """
+plugins {
+    id 'java'
+    id 'ch.nomisp.confluence.publisher'
+}
+
+confluencePublisher {
+    asciiDocRootFolder = file("\${projectDir}/docs/asciidocV1")
+    //outputDir = "\${buildDir}/docs/confluence"
+    rootConfluenceUrl = '$CONFLUENCE_ROOT_URL'
+    spaceKey = 'GRADLE'
+    ancestorId = '133398529'
+    username = 'nomisp@gmail.com'
+    password = '$CONFLUENCE_API_TOKEN'
+    pageTitlePrefix = 'Generated-Test -- '
+    notifyWatchers = true
+    restApiVersion = 'v1'
+}
+
+"""
+    }
+
+    def createV1IndexAdoc() {
+        File indexAdoc = testProjectDir.newFile('docs/asciidocV1/index.adoc')
+        indexAdoc << """
+= Test-Documentation of the confluence-publisher-plugin V1
+:doctype: book
+:page-layout!:
+:toc: left
+:toclevels: 2
+:sectanchors:
+:sectlinks:
+:sectnums:
+
+[#user-toc]
+
+== Content
+This is the content of index.adoc
+Test for the Rest API V1.
+"""
+    }
+
+    def createV1SubpageAdoc() {
+        testProjectDir.newFolder('docs/asciidocV1/index')
+        File subpageAdoc = testProjectDir.newFile('docs/asciidocV1/index/subpage.adoc')
+        subpageAdoc << """
+= Test-Documentation subpage V1
+:doctype: book
+:page-layout!:
+:toc: left
+:toclevels: 2
+:sectanchors:
+:sectlinks:
+:sectnums:
+
+[#user-toc]
+
+== Content
+This is the content of subpage.adoc
+Test for the Rest API V1.
 """
     }
 

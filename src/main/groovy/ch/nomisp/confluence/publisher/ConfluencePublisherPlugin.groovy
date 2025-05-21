@@ -46,6 +46,7 @@ class ConfluencePublisherPlugin implements Plugin<Project> {
             versionMessage = extension.versionMessage
             notifyWatchers = extension.notifyWatchers
 
+            restApiVersion = extension.restApiVersion
             sourceEncoding = extension.sourceEncoding
             publishingStrategy = extension.publishingStrategy
             orphanRemovalStrategy = extension.orphanRemovalStrategy

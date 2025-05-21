@@ -17,8 +17,11 @@ import org.sahli.asciidoc.confluence.publisher.client.ConfluencePublisher
 import org.sahli.asciidoc.confluence.publisher.client.ConfluencePublisherListener
 import org.sahli.asciidoc.confluence.publisher.client.OrphanRemovalStrategy
 import org.sahli.asciidoc.confluence.publisher.client.PublishingStrategy
+import org.sahli.asciidoc.confluence.publisher.client.http.ConfluenceClient
 import org.sahli.asciidoc.confluence.publisher.client.http.ConfluencePage
-import org.sahli.asciidoc.confluence.publisher.client.http.ConfluenceRestClient
+import org.sahli.asciidoc.confluence.publisher.client.http.ConfluenceRestV1Client
+import org.sahli.asciidoc.confluence.publisher.client.http.ConfluenceRestV2Client
+import org.sahli.asciidoc.confluence.publisher.client.http.ProxyConfiguration
 import org.sahli.asciidoc.confluence.publisher.client.metadata.ConfluencePublisherMetadata
 import org.sahli.asciidoc.confluence.publisher.converter.*
 
@@ -53,6 +56,8 @@ class PublishToConfluenceTask extends DefaultTask {
     @Internal
     final Property<Boolean> notifyWatchers = project.objects.property(Boolean)
 
+    @Internal
+    final Property<String> restApiVersion = project.objects.property(String)
     @Internal
     final Property<String> sourceEncoding = project.objects.property(String)
     @Internal
@@ -113,9 +118,9 @@ class PublishToConfluenceTask extends DefaultTask {
             if (this.convertOnly) {
                 logger.info("Publishing to Confluence skipped ('convert only' is enabled)")
             } else {
-                ConfluenceRestClient.ProxyConfiguration proxyConfiguration = null
+                ProxyConfiguration proxyConfiguration = null
                 if (proxyHost.isPresent()) {
-                    proxyConfiguration = new ConfluenceRestClient.ProxyConfiguration(this.proxyScheme.getOrElse('http'),
+                    proxyConfiguration = new ProxyConfiguration(this.proxyScheme.getOrElse('http'),
                             this.proxyHost.get(),
                             this.proxyPort.getOrElse(80),
                             this.proxyUsername.getOrNull(),
@@ -124,14 +129,27 @@ class PublishToConfluenceTask extends DefaultTask {
 
                 Double maxReqPerSec = maxRequestsPerSecond.getOrElse(10)
                 Integer connectionTTL = connectionTimeToLive.getOrElse(5000)
-                ConfluenceRestClient confluenceRestClient = new ConfluenceRestClient(rootConfluenceUrl.get(),
-                        proxyConfiguration,
-                        this.skipSslVerification,
-                        this.enableHttpClientSystemProperties,
-                        maxReqPerSec,
-                        connectionTTL,
-                        this.username.get(),
-                        this.password.get())
+
+                ConfluenceClient confluenceRestClient
+                if (restApiVersion.isPresent() && "v1" == restApiVersion.get()) {
+                    confluenceRestClient = new ConfluenceRestV1Client(rootConfluenceUrl.get(),
+                            proxyConfiguration,
+                            this.skipSslVerification,
+                            this.enableHttpClientSystemProperties,
+                            maxReqPerSec,
+                            connectionTTL,
+                            this.username.get(),
+                            this.password.get())
+                } else {
+                    confluenceRestClient = new ConfluenceRestV2Client(rootConfluenceUrl.get(),
+                            proxyConfiguration,
+                            this.skipSslVerification,
+                            this.enableHttpClientSystemProperties,
+                            maxReqPerSec,
+                            connectionTTL,
+                            this.username.get(),
+                            this.password.get())
+                }
                 ConfluencePublisherListener confluencePublisherListener = new LoggingConfluencePublisherListener(logger)
 
                 confluencePublisherMetadata.getPages().forEach(page -> {
